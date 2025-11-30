@@ -1,10 +1,31 @@
 {% extends "learning_logs/base.html" %}
+{% load bootstrap3 %} {% block header %}
+    {% endblock header %}
 
 {% block content %}
-  <form method='post' action="{% url 'users:register' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button name='submit'>register</button>
-    <input type='hidden' name='next' value="{% url 'learning_logs:index' %}" />
-  </form>
-{% endblock content %}
+    
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-5"> 
+            
+            <div class="card p-4">
+                <h3 class="card-title text-center">Đăng ký Tài khoản Mới</h3>
+                <hr>
+                
+                <form method="post" action="{% url 'users:register' %}">
+                    {% csrf_token %}
+                    
+                    {% bootstrap_form form %}
+
+                    <div class="text-center mt-3"> 
+                        {% buttons %}
+                            <button name="submit" class="btn btn-primary btn-block">Đăng ký</button>
+                        {% endbuttons %}
+                    </div>
+                    
+                    <input type='hidden' name='next' value="{% url 'learning_logs:index' %}" />
+                </form>
+            </div>
+            
+        </div>
+    </div>
+    {% endblock content %}

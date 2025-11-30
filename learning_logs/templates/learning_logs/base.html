@@ -1,5 +1,5 @@
 {% load bootstrap3 %}
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -10,6 +10,7 @@
 		<title>Learning Log</title>
 
 		{% bootstrap_css %}
+		<link rel="stylesheet" href="{% static 'learning_logs/css/style.css' %}">
 		{% bootstrap_javascript %}
 
 	</head>
@@ -57,7 +58,8 @@
 			</div>
 
 		</div> <!-- /container -->
-{% load static %}
+
+
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

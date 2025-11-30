@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # My apps
+    
     'learning_logs',
     'users',
     'bootstrap3',
@@ -156,7 +157,7 @@ if os.getcwd() == '/app':
 
   # Allow only Heroku to host the project.
   ALLOWED_HOSTS = ['learning-log.herokuapp.com']
-  DEBUG = False
+  DEBUG = True
 
   # Allow all host headers.
   ALLOWED_HOSTS = ['*']
