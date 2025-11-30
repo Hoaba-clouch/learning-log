@@ -28,4 +28,6 @@ urlpatterns = [
     # Page for editing an entry - Cú pháp mới dùng <int:entry_id>
     # url(r'^edit_entry/(?P<entry_id>\d+)/$', views.edit_entry, name='edit_entry')
     path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'),
+    path('delete_entry/<int:entry_id>/', views.delete_entry, name='delete_entry'),
+    path('delete_topic/<int:topic_id>/', views.delete_topic, name='delete_topic'),
 ]

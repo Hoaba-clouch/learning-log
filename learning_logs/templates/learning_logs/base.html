@@ -57,6 +57,50 @@
 			</div>
 
 		</div> <!-- /container -->
-
+{% load static %}
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Xác nhận Xóa</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc chắn muốn xóa mục này không? Thao tác này không thể hoàn tác.</p>
+        <p>Tên mục: <strong id="modalItemName"></strong></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+        
+        <form id="modalDeleteForm" method="POST" action="">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Xác nhận Xóa</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    // Mã JavaScript/jQuery xử lý Modal
+    $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Lấy nút đã kích hoạt modal
+        
+        // 1. Lấy dữ liệu từ các thuộc tính data-
+        var deleteUrl = button.data('url');
+        var itemName = button.data('item-name');
+        var itemType = button.data('item-type');
+        
+        var modal = $(this);
+        
+        // 2. Cập nhật nội dung hiển thị trong Modal
+        modal.find('.modal-title').text('Xác nhận xóa ' + itemType);
+        modal.find('#modalItemName').text(itemName);
+        
+        // 3. Cập nhật ACTION của form POST ẩn
+        modal.find('#modalDeleteForm').attr('action', deleteUrl);
+    });
+</script>
 	</body>
 </html>
