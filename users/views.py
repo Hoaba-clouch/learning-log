@@ -12,6 +12,10 @@ def logout_view(request):
     return HttpResponseRedirect(reverse('learning_logs:index'))
 
 def login_view(request):
+    register_form = UserCreationForm() 
+    login_form = AuthenticationForm(request) # Khởi tạo form Đăng nhập
+
+    initial_side = 'login'
     """Handle login form (POST) and show login page (GET)."""
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -23,12 +27,21 @@ def login_view(request):
                 return redirect('admin:index')
             return redirect(next_url or 'learning_logs:index')
         messages.error(request, 'Tên đăng nhập hoặc mật khẩu sai.')
-    else:
-        form = AuthenticationForm(request)
-    return render(request, 'users/login.html', {'form': form})
+    context = {
+        'login_form': login_form,
+        'register_form': register_form,
+        'initial_side': initial_side,
+    }
+    
+    # Render template chung
+    return render(request, 'users/auth.html', context)
 
 def register(request):
     """Register a new user."""
+    login_form = AuthenticationForm()
+    register_form = UserCreationForm() # Khởi tạo form Đăng ký
+    
+    initial_side = 'register'
     if request.method != 'POST':
         form = UserCreationForm()
     else:
@@ -41,6 +54,12 @@ def register(request):
                 login(request, user)
             messages.success(request, 'Tạo tài khoản thành công.')
             return redirect('learning_logs:index')
-    context = {'form': form}
-    return render(request, 'users/register.html', context)
+    context = {
+        'login_form': login_form,
+        'register_form': register_form,
+        'initial_side': initial_side,
+    }
+    
+    # Render template chung
+    return render(request, 'users/auth.html', context)
 # ...existing code...

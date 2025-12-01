@@ -10,7 +10,7 @@
 		<title>Learning Log</title>
 
 		{% bootstrap_css %}
-		<link rel="stylesheet" href="{% static 'learning_logs/css/style.css' %}">
+		<link rel="stylesheet" href="{% static 'learning_logs/css/main.css' %}">
 		{% bootstrap_javascript %}
 
 	</head>
@@ -18,7 +18,7 @@
 	<body>
 		<!-- Static navbar -->
 		<nav class="navbar navbar-default navbar-static-top">
-			<div class="container">
+			<div class="containerx" style="margin: auto; padding: auto;">
 
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed"
@@ -30,7 +30,7 @@
 				</div>
 
 				<div id="navbar" class="navbar-collapse collapse">
-					<ul class="nav navbar-nav">
+					<ul class="nav navbar-nav navbar-left">
 						<li><a href="{% url 'learning_logs:topics' %}">Topics</a></li>
 					</ul>
 
