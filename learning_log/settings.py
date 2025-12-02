@@ -38,7 +38,7 @@ SECRET_KEY = 'vrk3lh5!w6v%qo04r+rb31f_ypb1li4!jzw*!i)xfsgeddt5)9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1','localhost','0.0.0.0']
+ALLOWED_HOSTS = ['hoaba.pythonanywhere.com','127.0.0.1','localhost','0.0.0.0']
 
 #ALLOWED_HOSTS = ['0.0.0.0']
 
@@ -140,8 +140,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    # Thường là thư mục 'static' nằm ở cấp root dự án (nếu có)
+    os.path.join(BASE_DIR, 'static'),
+]
 # My Settings
 LOGIN_URL = '/users/login/'
 
