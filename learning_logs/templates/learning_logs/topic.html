@@ -1,61 +1,64 @@
 {% extends 'learning_logs/base.html' %}
 
 {% block header %}
-	<h1>Topics</h1>
+<h2 class="thetopic">Chủ đề: {{ topic }}</h2>
+    <h2 class="d-flex justify-content-between align-items-center mt-4">
+        
+        
+        <button type="button" 
+                class="btn btn-outline-danger btn-sm" 
+                data-toggle="modal" 
+                data-target="#confirmDeleteModal"
+                data-url="{% url 'learning_logs:delete_topic' topic.id %}"
+                data-item-name="{{ topic.text }}"
+                data-item-type="Chủ đề">
+            Xóa Chủ đề này
+        </button>
+    </h2>
+    <hr>
 {% endblock header %}
 
 {% block content %}
-	<p>Topic: {{ topic }}</p>
-	<p>Entries:</p>
-	<p>
-		<a href="{% url 'learning_logs:new_entry' topic.id %}">add new entry</a>
-	</p>
-	<ul>
-	{% for entry in entries %}
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3>
-					{{ entry.date_added|date:'M d, Y H:i' }}
-					<small>
-						<a href="{% url 'learning_logs:edit_entry' entry.id %}">
-					edit entry</a>
-					</small>
-					<div class="card mb-3">
-            <div class="card-body">
-                <button type="button" 
-                        class="btn btn-danger btn-sm" 
-                        data-toggle="modal" 
-                        data-target="#confirmDeleteModal"
-                        data-url="{% url 'learning_logs:delete_entry' entry.id %}"
-                        data-item-name="{{ entry.text|truncatechars:30 }}"
-                        data-item-type="Ghi chú">
-                    Xóa
-                </button>
-                <footer class="blockquote-footer text-right">{{ entry.date_added|date:'M d, Y H:i' }}</footer>
-            </div>
-        </div>
-				</h3>
-			</div>
-			<div class="panel-body">
-				{{ entry.text|linebreaks }}
-			</div>
-		</div> <!-- panel -->
-	{% empty %}
-		There are no entries for this topic yet.
-	{% endfor %}
-	</ul>
-
-
-    <button type="button" 
-            class="btn btn-danger btn-sm mb-4" 
-            data-toggle="modal" 
-            data-target="#confirmDeleteModal"
-            data-url="{% url 'learning_logs:delete_topic' topic.id %}"
-            data-item-name="{{ topic.text }}"
-            data-item-type="Chủ đề">
-        Xóa Chủ đề này (và tất cả ghi chú)
-    </button>
+    
     <p>
-        <a href="{% url 'learning_logs:new_entry' topic.id %}">Thêm ghi chú mới</a>
+        <a href="{% url 'learning_logs:new_entry' topic.id %}" class="btn btn-primary mb-4">
+            <i class="fa fa-plus"></i> Thêm Ghi chú mới
+        </a>
     </p>
+
+    {% for entry in entries %}
+        
+        <div class="entry-card">
+            
+            <div class="entry-header">
+                
+                <small class="text-muted">
+                    {{ entry.date_added|date:'M d, Y H:i' }}
+                </small>
+
+                <div class="btn-group">
+                    <a href="{% url 'learning_logs:edit_entry' entry.id %}" class="btn btn-sm btn-info">Sửa</a>
+                    
+                    <button type="button" 
+                            class="btn btn-sm btn-danger ml-2" 
+                            data-toggle="modal" 
+                            data-target="#confirmDeleteModal"
+                            data-url="{% url 'learning_logs:delete_entry' entry.id %}"
+                            data-item-name="{{ entry.text|truncatechars:30 }}"
+                            data-item-type="Ghi chú">
+                        Xóa
+                    </button>
+                </div>
+            </div>
+            
+            <div class="entry-content">
+                {{ entry.text|linebreaks }}
+            </div>
+            
+        </div>
+        
+    {% empty %}
+        <p class="alert alert-info">Chưa có ghi chú nào được thêm vào cho chủ đề này.</p>
+    {% endfor %}
+    
 {% endblock content %}
