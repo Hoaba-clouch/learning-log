@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+     'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -68,6 +69,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+ 
+   
 ]
 
 ROOT_URLCONF = 'learning_log.urls'
@@ -141,29 +144,23 @@ USE_TZ = True
 STATIC_URL = '/static/'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    # Thường là thư mục 'static' nằm ở cấp root dự án (nếu có)
-    os.path.join(BASE_DIR, 'static'),
-]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # My Settings
 LOGIN_URL = '/users/login/'
 
 # Heroku Settings
-if os.getcwd() == '/app':
-  import dj_database_url
-  DATABASES = {
-    'default': dj_database_url.config(default='postgres://localhost')
-  }
+# Cho phép Heroku host dự án
+ALLOWED_HOSTS = ['*']
+DEBUG = os.environ.get('DEBUG', 'True') == 'True' # Thiết lập DEBUG dựa trên biến môi trường
 
-  # Honor the 'X-Forwarded-Proto' header for request.is_secure().
-  SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# Cấu hình Database cho Heroku
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+}
 
-  # Allow only Heroku to host the project.
-  ALLOWED_HOSTS = ['learning-log.herokuapp.com']
-  DEBUG = True
-
-  # Allow all host headers.
-  ALLOWED_HOSTS = ['*']
+# Honor the 'X-Forwarded-Proto' header for request.is_secure().
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
   # Static asset configuration
  
